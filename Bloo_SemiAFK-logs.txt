@@ -1,0 +1,123 @@
+[2015-10-10 13:42:41] <antonizoon> 4archive's code is obviously the right thing to use to view the old dumps
+[2015-10-10 13:42:57] <antonizoon> And it's still effective small scale
+[2015-10-10 13:43:08] <antonizoon> So upload your commits
+[2015-10-10 13:43:13] <antonizoon> So it can help others too
+[2015-10-10 13:43:53] <Bloo_SemiAFK> if i upload my commit
+[2015-10-10 13:44:02] <Bloo_SemiAFK> it will totaly break the current cms
+[2015-10-10 13:44:11] <Bloo_SemiAFK> i've removed some stuff i don't like or need
+[2015-10-10 13:44:18] <Bloo_SemiAFK> it's an entire fork, so to say.
+[2015-10-10 13:44:27] <Bloo_SemiAFK> it would not be beneficial, trust me.
+[2015-10-10 13:44:37] <antonizoon> Just don't send a pull request yet then
+[2015-10-10 13:44:37] <Bloo_SemiAFK> plus i didnt got everything to work out properly
+[2015-10-10 13:44:55] <antonizoon> You at least made good insights
+[2015-10-10 13:44:58] <Bloo_SemiAFK> it's a shitty cms anyway, i'd rather not spend much time deving it tbh.
+[2015-10-10 13:45:02] <antonizoon> Into many bugs
+[2015-10-10 13:45:09] <antonizoon> Well you don't have to
+[2015-10-10 13:45:11] <Bloo_SemiAFK> i bet anyone who picks it would solve them in a day anyway
+[2015-10-10 13:45:23] <antonizoon> Hmm.. I wouldn't
+[2015-10-10 13:45:25] <Bloo_SemiAFK> yeh i dont plan on pushing anything tbh.
+[2015-10-10 13:45:41] <antonizoon> Why duplicate work? Is what I am thinking
+[2015-10-10 13:45:44] <Bloo_SemiAFK> well unless they have no clue of web deving and/or are script kiddies.. maybe
+[2015-10-10 13:45:47] <antonizoon> OK, how about just to me
+[2015-10-10 13:45:57] <Bloo_SemiAFK> well i can send it to you, y
+[2015-10-10 13:46:05] <antonizoon> I need something to use to actually view the old 4archive locally
+[2015-10-10 13:46:14] <antonizoon> Whatever happens
+[2015-10-10 13:46:18] <Bloo_SemiAFK> that would be a bit shitty doh xD
+[2015-10-10 13:46:40] <antonizoon> So your code at least views it
+[2015-10-10 13:46:51] <antonizoon> I have my own archiver system which is better
+[2015-10-10 13:46:53] <Bloo_SemiAFK> yeah.. kinda
+[2015-10-10 13:46:57] <antonizoon> So I wouldn't use it for that
+[2015-10-10 13:47:00] <Bloo_SemiAFK> all images are shownin fullsize doh xD
+[2015-10-10 13:47:10] <antonizoon> Just need something to view the database
+[2015-10-10 13:47:13] <Bloo_SemiAFK> i'm too lazy to fix it
+[2015-10-10 13:47:19] <antonizoon> It's alright, if it is one person use
+[2015-10-10 13:47:38] <antonizoon> We should definitely move to something different
+[2015-10-10 13:47:46] <antonizoon> But this work was not a waste
+[2015-10-10 13:48:20] <antonizoon> You accomplished something I have wanted to do for a while. So share a bit, how about it?
+[2015-10-10 13:51:06] <Bloo_SemiAFK> fine, uploading atm.
+[2015-10-10 13:51:12] <Bloo_SemiAFK> http://puu.sh/kFlvd/0ba9e61c2d.rar
+[2015-10-10 13:51:23] <antonizoon> Thanks man
+[2015-10-10 13:51:25] <Bloo_SemiAFK> first rename .env.example to .env
+[2015-10-10 13:51:28] <antonizoon> Now go take a break
+[2015-10-10 13:51:30] <Bloo_SemiAFK> and chaneg it accordingly
+[2015-10-10 13:51:47] <antonizoon> Hmm, why did it get named with example
+[2015-10-10 13:51:48] <Bloo_SemiAFK> config/archive.php - i changed that, by default archiving is disabled
+[2015-10-10 13:52:02] <Bloo_SemiAFK> cus its an example..
+[2015-10-10 13:52:03] <Bloo_SemiAFK> duh xD
+[2015-10-10 13:52:08] <Bloo_SemiAFK> actually eh
+[2015-10-10 13:52:12] <Bloo_SemiAFK> extract it
+[2015-10-10 13:52:13] <Bloo_SemiAFK> run
+[2015-10-10 13:52:21] <Bloo_SemiAFK> php composer install
+[2015-10-10 13:52:38] <Bloo_SemiAFK> (or composer.phar)
+[2015-10-10 13:52:42] <Bloo_SemiAFK> then change the .env to link to your db
+[2015-10-10 13:53:23] <antonizoon> Oh, so .env is the configuration file
+[2015-10-10 13:53:30] <Bloo_SemiAFK> y
+[2015-10-10 13:53:33] <Bloo_SemiAFK> you will have to add md5 and imgur_hash to your posts table !
+[2015-10-10 13:53:38] <Bloo_SemiAFK> then do
+[2015-10-10 13:53:41] <Bloo_SemiAFK> php artisan migrate
+[2015-10-10 13:53:46] <Bloo_SemiAFK> it will create the needed tables
+[2015-10-10 13:54:08] <Bloo_SemiAFK> so it should look smth like http://puu.sh/kFlFX/99cf37bed8.png
+[2015-10-10 13:54:24] <Bloo_SemiAFK> i've rewritten/changed:
+[2015-10-10 13:58:35] <Bloo_SemiAFK> config/archive.php - changed from enable to disable
+[2015-10-10 13:58:35] <Bloo_SemiAFK> app/Posts.php - changed a bit, removed soft deletes and stuff
+[2015-10-10 13:58:35] <Bloo_SemiAFK> app/Thread.php - also ^
+[2015-10-10 13:58:35] <Bloo_SemiAFK> app/Http/Controllers/ApiController.php - modified heavily to suit my needs and to actually ARCHIVE THE FUCKING SHIT
+[2015-10-10 13:58:35] <Bloo_SemiAFK> app/Http/routes.php <- this is how your routing system works, i've changed it to fit my needs.
+[2015-10-10 13:58:37] <Bloo_SemiAFK> database/migrations/Several stuff <- i modified the db schemas
+[2015-10-10 13:58:41] <Bloo_SemiAFK> don't use the seed files, they wont work
+[2015-10-10 13:58:43] <Bloo_SemiAFK> public/js/main.js - modified to fit my needs
+[2015-10-10 13:58:45] <Bloo_SemiAFK> resources/views/faq, home, master, terms, etc. - modified to fit my needs
+[2015-10-10 13:58:47] <Bloo_SemiAFK> i may have changed some other stuff but i don't remember. to a git compare or smth.
+[2015-10-10 13:58:49] <Bloo_SemiAFK> hopefully u got all that i spammed
+[2015-10-10 13:58:53] <Bloo_SemiAFK> else, http://puu.sh/kFlWJ/7d092831a3.txt
+[2015-10-10 13:58:55] <antonizoon> Yup
+[2015-10-10 13:58:56] <Bloo_SemiAFK> and im off to dinner
+[2015-10-10 13:59:02] <antonizoon> Oh, that helps too
+[2015-10-10 13:59:10] <Bloo_SemiAFK> y
+[2015-10-10 13:59:15] <Bloo_SemiAFK> dont push it doh...
+[2015-10-10 13:59:23] <Bloo_SemiAFK> i mean, even doh i'm not proud i did the work after all..
+[2015-10-10 13:59:23] <antonizoon> Thank you for your work. It really does help.
+[2015-10-10 13:59:35] <antonizoon> At least for me
+[2015-10-10 13:59:56] <antonizoon> If needed I will improve further, but probably only enough for single person view
+[2015-10-10 13:59:59] <Bloo_SemiAFK> i could sell you my current work which is on the 4chanarchives.cu.cc xDD cus i've spend there about 30+ code hours
+[2015-10-10 14:00:14] <Bloo_SemiAFK> well the only thing u should do is eh
+[2015-10-10 14:00:36] <Bloo_SemiAFK> make the thread.blade.php to show correct sizing
+[2015-10-10 14:00:45] <Bloo_SemiAFK> cus atm it's just the entite pic and not sized
+[2015-10-10 14:00:50] <antonizoon> Heh, well let's try migrating to Fuuka or Futabilly next time, alright?
+[2015-10-10 14:00:56] <antonizoon> Ok
+[2015-10-10 14:00:57] <Bloo_SemiAFK> xD y
+[2015-10-10 14:01:05] <Bloo_SemiAFK> also, iit's in laravel coded
+[2015-10-10 14:01:14] <Bloo_SemiAFK> and unless you have had experience with it, it can be tricky and hard.
+[2015-10-10 14:01:34] <Bloo_SemiAFK> ive coded for half an year in laravel and this is why i managed to get the entire shit runing in a day of work
+[2015-10-10 14:01:45] <Bloo_SemiAFK> but it's still outdated/bad/untested code in the end
+[2015-10-10 14:01:47] <antonizoon> Also we should upgrade the server before we start anew the next time, a good time to do it 
+[2015-10-10 14:01:49] <Bloo_SemiAFK> oh and a hint
+[2015-10-10 14:01:51] <Bloo_SemiAFK> do
+[2015-10-10 14:01:53] <Bloo_SemiAFK> php artisan serve
+[2015-10-10 14:01:57] <antonizoon> Yeah that's why I stick to python in the end
+[2015-10-10 14:02:02] <antonizoon> What does that do
+[2015-10-10 14:02:05] <Bloo_SemiAFK> and it will automatically bring up a web srv
+[2015-10-10 14:02:10] <Bloo_SemiAFK> localhost:8000
+[2015-10-10 14:02:24] <Bloo_SemiAFK> if you want it to be visible outside of your LAN/PC
+[2015-10-10 14:02:25] <Bloo_SemiAFK> do
+[2015-10-10 14:02:39] <Bloo_SemiAFK> php artisan serve --host 0.0.0.0 --port 80
+[2015-10-10 14:02:41] <Bloo_SemiAFK> or w/e port you want
+[2015-10-10 14:02:55] <Bloo_SemiAFK> you can bind it to any PC ip as well, so it will go out though that interface only
+[2015-10-10 14:03:10] <antonizoon> Oh, awesome
+[2015-10-10 14:03:18] <Bloo_SemiAFK> PS: if you ever get milions of $$$ from those stock offers, feel free to drop me some xD
+[2015-10-10 14:03:21] <Bloo_SemiAFK> i wouldnt mind xD
+[2015-10-10 14:03:40] <antonizoon> As long as you promise to keep this archiver up
+[2015-10-10 14:03:48] <antonizoon> And active
+[2015-10-10 14:03:59] <Bloo_SemiAFK> also, if all works correctly, in the end you should be able to see http://bloo.spys.ru:1234/b/thread/645541813
+[2015-10-10 14:04:11] <antonizoon> Alright, I'll try it
+[2015-10-10 14:04:16] <Bloo_SemiAFK> i'll be having the 4archive's cms on :1234 for now
+[2015-10-10 14:04:29] <antonizoon> Yes, it works
+[2015-10-10 14:04:32] <Bloo_SemiAFK> but it does has some issues i believe with the old code if you are re-archving threads
+[2015-10-10 14:05:12] <Bloo_SemiAFK> but yeh, this is just ugh so shitty..
+[2015-10-10 14:05:15] <Bloo_SemiAFK> it breaks so badly
+[2015-10-10 14:05:18] <antonizoon> Hmm. Maybe you should stick to our BASC-Archiver for now if you actually want to keep the threads safe
+[2015-10-10 14:05:19] <Bloo_SemiAFK> cus i modified the shcema
+[2015-10-10 14:05:35] <antonizoon> It is dead simple and tracks the thread
+[2015-10-10 14:05:43] <antonizoon> But otherwise, good work
+[2015-10-10 14:05:46] <Bloo_SemiAFK> well i wanted to extend my 4chanarchives.cu.cc since a month
+[2015-10-10 14:06:06] <Bloo_SemiAFK> so i can add more threads and stuff
