@@ -42,28 +42,9 @@ To seed fake data into the threads and posts table, run `php artisan db:seed`
 - Donation page. The view is there but needs to be filled out with your own message. (donate.blade.php)
 - Terms of service page. Again, the view is there, but you need to fill it out. (terms.blade.php)
 
-# Backwords Compatibility for Old Schemas
-When 4archive shut down, it's database was also released the public in a shutdown message I left (You can read the shutdown message below).
+## Schema Rollback
 
-This new version of the 4archive code was written before I decided to shut down 4archive. **I had full intentions to create a new UI for 4archive, new schemas, and overall make a beautiful product that I could be proud of. Because of this,  the schemas are different!! You cannot use this code for the old schemas!!!**. In order to achieve backwords compatibility, you must line up the columns from the old database to this new database. Or just alter the source. It's very clean and easy to modify if you know your way around Laravel.
-
-Here's a gist of what is changed in the schemas:
--  Tables now have foreign keys.
--  `threads_id` is now `thread_id` in all applicable tables.
--  `available` is now `deleted_at` to be Laravel friendly.
--  Primary key and foreign keys are now `int(10)` and `int(10) unsigned` respectively.
--  Normal integers are now `int(11)`
--  `created_at` and `updated_at` columns added across all tables.
--  Posts table specific:
-    -  `chan_image_name` is dropped.
-    -  `image_dimensions` and `thumb_dimensions` are now `image_width`, `image_height`, `thumb_width`, and `thumb_height`
-    -  `chan_post_date` is now `post_timestamp` and is now a `timestamp` type.
--  Threads table specific:
-    -  `archive_date` and `update_date` are dropped and replaced with `created_at` and `deleted_at`
-    -  `user_ips` is dropped and records are now placed in the `update_records` table.
-    -  `admin_note` is dropped.
-    -  `alive` is dropped.
-    -  `tweeted` is now `tweeted_at (timestamp)`
+The database schema used by this engine has been mostly rolled back to the original 4archive database, though there are some differences (namely, an MD5 field and the restoration of chan_images_fname).
 
 You can find the original SQL dumps [here](http://archive.org/details/4archive).
 
