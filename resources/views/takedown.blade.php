@@ -1,11 +1,11 @@
 @extends('master')
 
-@section('title', 'Takedown Request - 4archive')
+@section('title', 'Takedown Request - 4chanarchives.cu.cc')
 @section('contentHeader', 'Takedown Request')
 
 @section('content')
 <div class="hp-content">
-    <p>If you believe archived content on 4archive infringes on your rights, someone else's rights, or the law, you can fill out the field below.</p>
+    <p>If you believe archived content on 4chanarchives.cu.cc infringes on your rights, someone else's rights, or the law, you can fill out the field below.</p>
     <p>Please include in the additional information field why you believe it infringes on your rights or someone else's rights, or which law is being broken by the content.</p>
     <p>Be aware that by submitting a takedown request, you are aware of the possibility that your request may be made available to the public.</p>
     <hr />
@@ -25,7 +25,7 @@
         <select name="reason">
             <option>This thread contains my personal information</option>
             <option>This thread contains posts that violate United States federal/state law</option>
-            <option>This thread is against 4archive rules</option>
+            <option>This thread is against 4chanarchives.cu.cc rules</option>
             <option>Formal DMCA Request</option>
             <option value="Other">Other (specify in additional information)</option>
         </select>
@@ -34,7 +34,8 @@
         <label>Captcha *</label>
         <script src='https://www.google.com/recaptcha/api.js'></script>
         <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_PUBLIC') }}"></div>
-        <input type="submit" name="submit" value="Submit request" />
+     <!--   <input type="submit" name="submit" value="Submit request" />-->
+     <input type="button" name="noName" value="Reporting currently disabled, send me an e-mail instead - wtabusse@gmail.com">
     </form>
 </div>
 @stop

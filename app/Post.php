@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
+    public $timestamps = false;
 
     protected $table = "posts";
-    protected $fillable = ["chan_id", "thread_id", "original_image_name", "image_size", "image_width", "image_height", "thumb_width", "thumb_height", "image_url", "imgur_hash", "subject", "name", "tripcode", "capcode", "post_timestamp", "body"];
+    protected $fillable = ["chan_id", "threads_id", "chan_image_name", "image_size", "image_dimensions", "thumb_dimensions", "image_url", "imgur_hash", "original_image_name", "subject", "name", "tripcode", "capcode", "chan_post_date", "body", "available", "md5"];
 
     public function thread()
     {

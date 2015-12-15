@@ -1,5 +1,8 @@
 <?php
 
+// Temporarily increase memory limit to 256MB
+ini_set('memory_limit','256M');
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 Dotenv::load(__DIR__.'/../');
@@ -61,7 +64,8 @@ $app->middleware([
     'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
     'Illuminate\Session\Middleware\StartSession',
     'Illuminate\View\Middleware\ShareErrorsFromSession',
-    'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
+    //'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
+
 ]);
 
 // $app->routeMiddleware([

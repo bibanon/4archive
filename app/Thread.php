@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Thread extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
+    public $timestamps = false;
 
     protected $table = "threads";
     protected $hidden = ['secret'];
 
     public function posts()
     {
-        return $this->hasMany('App\Post', 'thread_id', 'id');
+        return $this->hasMany('App\Post', 'threads_id', 'id');
     }
 
     public function takedown_requests()

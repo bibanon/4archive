@@ -1,40 +1,62 @@
 @extends('master')
 
-@section('title', 'FAQ - 4archive')
+@section('title', 'FAQ - 4ChanArchives')
 @section('contentHeader', 'FAQ')
 
 @section('content')
 <div class="hp-content">
-    <strong id="rules">Are they any rules on 4archive?</strong>
-    <p>Yeah.
-        <ul class="indent">
-            <li>Don't archive things that are obviously against the law for me to host.</li>
-            <li>Don't archive "dumping ex's pictures", "pics you're not suppose to share" threads. They're annoying. I didn't make 4archive for it to become a revenge porn site.</li>
-        </ul>
-    </p>
-    <hr />
-    <strong>What are the requirements to archive a thread?</strong>
-    <p>A thread must have at least ten replies to be archived. This is to eliminate random, completely unimportant threads from being archived.</p>
+    <h1>This is a resurrected version of 4Archive</h1>
+    <br><b>You can now search through the entire site, thanks to Google <3</b>
     
-    <strong>Why are some threads showing "Image not found?" on every post?</strong>
-    <p>For some reason, on rare occurrences, images will not upload to Imgur at all, and therefore show "Image not found" errors all over the thread. Sorry if this happens. I'm really lazy and don't want to debug it.</p>
-
-    <strong>Why can't I archive threads on some of the boards?</strong>
-    <p>Yeah, I'm super sorry. I blacklisted a very small amount of boards that I believe could cause a huge problem in the long run. These mainly include boards that are home to large images.</p>
-
-    <strong>I archived a thread, and it's not there anymore. What happened to it?</strong>
-    <p>The thread could've been removed because I obtained a takedown request from someone. If that wasn't the case, then I removed it because I didn't like it. Sorry.</p>
-
-    <strong>What's a takedown request?</strong>
-    <p>At the top of the website, I have a link to learn about how to send me a takedown request. Takedown requests can be sent if someone feels like an archived thread/post infringed on their rights, someone else's rights, or the law. I comply with all legit cases and will takedown what is necessary.</p>
-
-    <strong>Why won't the view counter on my thread go up?</strong>
-    <p>Threads are cached when ever they are viewed and are purged every hour. Views on the top right corner of threads are therefore updated every hour.</p>
-    <p>Views per IP are also cached then purge them everyday at midnight EST. Your view will count once for that thread, per day. If you view your thread 100 times in 1 day, it'll count once, though if you view your thread once everyday for 100 days, it'll count 100 times.</p>
-
-    <strong>I'm part of a law enforcement agency, and, as part of an investigation, I need IP logs from your website</strong>
-    <p>Be aware that this is an archive, not a forum. I do not have IP addresses of people who posted the <em>original</em> content on 4chan.org. I do, however, store IP addresses of users who archived content and what content they archived. If you need to know who originally posted the content on 4chan.org, contact the 4chan administrator at <a href="mailto:moot@4chan.org">moot@4chan.org</a>. Law enforcement can contact me at <a href="mailto:admin@4archive.org">admin@4archive.org</a>. I will respond to any law enforcement agency or officer that attempts to contact me.</p>
-    <br />
-    <p>Any additional questions can be sent to me over <a href="http://www.twitter.com/4archive">twitter</a></p>
+    <div class="search" style='width:450px; margin:0 auto; padding: 0' >
+        <script>
+          (function() {
+            var cx = '017289221794755012486:itq0_qa1bfk';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+          })();
+        </script>
+        <gcse:search></gcse:search>
+    </div>
+    
+    <br><b>Board list:</b>
+    <br>
+        <a href='http://4chanarchives.cu.cc/board/a'>Anime & Manga</a> | <a href='http://4chanarchives.cu.cc/board/adv'>Advice</a> | <a href='http://4chanarchives.cu.cc/board/an'>Animals & Nature</a> | <a href='http://4chanarchives.cu.cc/board/asp'>Alternative Sports</a> | <a href='http://4chanarchives.cu.cc/board/b'>Random</a> | <a href='http://4chanarchives.cu.cc/board/biz'>Business & Finance</a> | <a href='http://4chanarchives.cu.cc/board/c'>Anime/Cute</a> | 
+        <a href='http://4chanarchives.cu.cc/board/cgl'>Cosplay & EGL</a> | <a href='http://4chanarchives.cu.cc/board/ck'>Food & Cooking</a> | <a href='http://4chanarchives.cu.cc/board/cm'>Cute/Male</a> | <a href='http://4chanarchives.cu.cc/board/co'>Comics & Cartoons</a> | <a href='http://4chanarchives.cu.cc/board/d'>Hentai/Alternative</a> | <a href='http://4chanarchives.cu.cc/board/diy'>Do It yourself</a> | <a href='http://4chanarchives.cu.cc/board/e'>Ecchi</a> | 
+        <a href='http://4chanarchives.cu.cc/board/fa'>Fashion</a> | <a href='http://4chanarchives.cu.cc/board/fit'>Fitness</a> | <a href='http://4chanarchives.cu.cc/board/g'>Technology</a> | <a href='http://4chanarchives.cu.cc/board/h'>Hentai</a> | <a href='http://4chanarchives.cu.cc/board/hc'>Hardcore</a> | <a href='http://4chanarchives.cu.cc/board/hm'>Handsome Men</a> | <a href='http://4chanarchives.cu.cc/board/i'>Oekaki</a> | <a href='http://4chanarchives.cu.cc/board/ic'>Artwork/Critique</a> | 
+        <a href='http://4chanarchives.cu.cc/board/int'>International</a> | <a href='http://4chanarchives.cu.cc/board/jp'>Otaku Culture</a> | <a href='http://4chanarchives.cu.cc/board/k'>Weapons</a> | <a href='http://4chanarchives.cu.cc/board/lgbt'>Lesbian, Gay, Bisexual, & Transgender</a> | <a href='http://4chanarchives.cu.cc/board/lit'>Literature</a> | <a href='http://4chanarchives.cu.cc/board/m'>Mecha</a> | <a href='http://4chanarchives.cu.cc/board/mlp'>My Little Pony</a> | 
+        <a href='http://4chanarchives.cu.cc/board/mu'>Music</a> | <a href='http://4chanarchives.cu.cc/board/n'>Transportation</a> | <a href='http://4chanarchives.cu.cc/board/o'>Auto</a> | <a href='http://4chanarchives.cu.cc/board/out'>Outdoors</a> | <a href='http://4chanarchives.cu.cc/board/po'>Papercraft & Origami</a> | <a href='http://4chanarchives.cu.cc/board/pol'>Politically Incorrect</a> | <a href='http://4chanarchives.cu.cc/board/qa'>Question & Answer</a> | 
+        <a href='http://4chanarchives.cu.cc/board/r'>Request</a> | <a href='http://4chanarchives.cu.cc/board/s'>Sexy Beautiful Women</a> | <a href='http://4chanarchives.cu.cc/board/sci'>Science & Math</a> | <a href='http://4chanarchives.cu.cc/board/soc'>Socialising (Cams & Meetups)</a> | <a href='http://4chanarchives.cu.cc/board/sp'>Sports</a> | <a href='http://4chanarchives.cu.cc/board/t'>Torrents</a> | <a href='http://4chanarchives.cu.cc/board/tg'>Traditional Games</a> | 
+        <a href='http://4chanarchives.cu.cc/board/toy'>Toys</a> | <a href='http://4chanarchives.cu.cc/board/trv'>Travel</a> | <a href='http://4chanarchives.cu.cc/board/tv'>Television & Film</a> | <a href='http://4chanarchives.cu.cc/board/u'>Yuri</a> | <a href='http://4chanarchives.cu.cc/board/v'>Video Games</a> | <a href='http://4chanarchives.cu.cc/board/vg'>Video Game Generals</a> | <a href='http://4chanarchives.cu.cc/board/vp'>Pokemon</a> | <a href='http://4chanarchives.cu.cc/board/vr'>Retro Games</a> | 
+        <a href='http://4chanarchives.cu.cc/board/w'>Anime/Wallpapers</a> | <a href='http://4chanarchives.cu.cc/board/x'>Paranormal</a> | <a href='http://4chanarchives.cu.cc/board/vp'>Pokemon</a> | <a href='http://4chanarchives.cu.cc/board/y'>Yaoi</a>
+    
+    <br>
+    <br><b>Known issues:</b>
+    <br>*Mobile version is known to be buggy.
+    <br>*The colour template is the same for all boards.
+    <br>*Currently no way to archive any threads from 4chan.
+    <br>*WebM files are not archived. Instead a 404 picture is shown.
+    <br>*The posts' image thumbnails are the actual full-sized picture.
+    <br>*Some threads/posts are displayed in the wrong board or link to a missing thread.
+    <br>
+    <br><b>Notes:</b>
+    <br>1. The site uses smart loading of images to ease your browser's work.
+    <br>2. None of the images shown on this website are hosted on or by 4ChanArchives.cu.cc.
+    <br>3. I'm not affiliated nor a part of  any *chan nor the original 4chanArchive nor any archiving website.
+    <br>4. <u>Please disable any advertisement blocking software, it's the only way I can pay the hosting company</u>
+    <br>4.1. I've tried to minimize the adverts spam. There should be around 3-5 popups adds per 24 hours max.
+    <br>4.2. If you don't like adds then don't click on the <a href='http://4chanarchives.cu.cc/more.php'>[More]</a> or [sexy stuff] links. They lead to a lot of adverts.
+    <br>5. If you are going to report something, please include as much information as possible, including a link to the post/thread.
+    <br>6. You can use wtabusse@gmail.com to e-mail me for any issues or requests such as DMCA, advertisements, information and etc.
+    <br>
+    <br><b>Statistics:</b>
+    <br>This website is alive since 19. June, 2015.
+    <br>This archive contains over 9.7mil posts, over 3mil images, stored in over 60k threads.
+    <br>The first archived thread was on: 2014-01-17 04:19:07
 </div>
 @stop

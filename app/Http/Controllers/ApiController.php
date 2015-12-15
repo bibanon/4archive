@@ -101,14 +101,15 @@ class ApiController extends BaseController
             return response()->json(['error' => 'To archive a thread, it must have at least 10 replies.']);
         }
 
-        // Has this thread been archived in the past?
-        $threadCheck = Thread::withTrashed()
-            ->where('board', '=', $board)
-            ->where('thread_id', '=', $thread_id);
-
         $postPosition = 0; // Default value (start from beginning of thread
+        
+        // Has this thread been archived in the past?
+        $threadCheck = Thread::where('board', '=', $board)->where('thread_id', '=', $thread_id )->get();
+        $countOfThreads =  $threadCheck->count();
+        
+        if ( $countOfThreads> 0 ) {
+          //  return response()->json(['error' => 'Thread already archived. Re-archving is currently disabled.']);
 
-        if ($threadCheck->count() > 0) {
             $existingThread = $threadCheck->first();
 
             // Has this thread been taken down?
@@ -123,7 +124,7 @@ class ApiController extends BaseController
 
             // Retrieve posts for this thread.
             // Determine at what point we should continue archiving this thread.
-            $existingPosts = $existingThread->posts()->withTrashed();
+            $existingPosts = $existingThread->posts()->get();
             $existingPostCount = $existingPosts->count();
 
             // No existing posts? Huh...
@@ -131,7 +132,7 @@ class ApiController extends BaseController
                 return response()->json(['error' => 'Something weird happened... Please try again later.']);
             }
 
-            $lastExistingPost = $existingPosts->get()->last();
+            $lastExistingPost = $existingPosts->last();
 
             // Get last live post (from 4chan API) and compare with the last post
             // we recorded since last archive attempt.
@@ -143,12 +144,12 @@ class ApiController extends BaseController
 
             // Wait... what? This shouldn't happen.
             if ($existingPostCount > $livePostCount) {
-                return repsonse()->json(['error' => 'Something weird happened... Please try again later.']);
+                return response()->json(['error' => 'Something weird happened... Please try again later.']);
             }
 
             // Update existing thread to become busy.
             $existingThread->busy = 1;
-            $existingThread->updated_num++;
+           // $existingThread->updated_num++;
             $existingThread->save();
 
             // Set post position to existingPostCount.
@@ -156,8 +157,10 @@ class ApiController extends BaseController
         } else {
             // Create a new thread
             $existingThread = new Thread();
-            $existingThread->board = $board;
             $existingThread->thread_id = $thread_id;
+            $existingThread->board = $board;
+            $existingThread->archive_date = DB::raw('NOW()');
+            $existingThread->user_ips = Request::ip();
             $existingThread->busy = 1;
             $existingThread->secret = str_random(8);
             $existingThread->save();
@@ -182,10 +185,11 @@ class ApiController extends BaseController
             $capcode = isset($livePost->capcode) ? $livePost->capcode : null;
             $postTimestamp = isset($livePost->time) && is_numeric($livePost->time) ? $livePost->time : null;
             $postBody = isset($livePost->com) ? $livePost->com : "";
+            $md5 =  isset($livePost->md5) ? $livePost->md5 : "";
 
             // Set image default values
             $imageName = null;
-            $imageSize = 0;
+            $imageSize = 271304;
             $thumbWidth = 0;
             $thumbHeight = 0;
             $imageWidth = 0;
@@ -194,10 +198,19 @@ class ApiController extends BaseController
             $originalImageName = null;
             $imageDeleteHash = null;
             $chanImageName = null;
-
-
-            // Do we have an image with this post? "tim" is only set when there is an image.
-            if (isset($livePost->tim) && $livePost->tim > 0) {
+            $uploadedImage = null;
+            $deleteHash = null;
+            $imageDimensions = null;
+            $thumbDimensions =  null;
+            
+            if( isset($livePost->tim) && $livePost->ext == ".webm") {   //use http://gfycat.com/api instead of imgur
+                $uploadedImage = "/image/image-404.png";
+                $imageDimensions = "486x500";
+                $thumbDimensions = "195x200";
+            }
+        
+            // Do we have an image with this post? "tim" is only set when there is an image (or a file?).
+            if (isset($livePost->tim) && $livePost->tim > 0 && $livePost->ext != ".webm" ) {
                 $chanImageName = $livePost->tim . $livePost->ext;
 
                 $imageLink = "http://i.4cdn.org/" . $board . "/src/" . $chanImageName;
@@ -212,7 +225,7 @@ class ApiController extends BaseController
                 $uploadedImage = "/image/image-404.png";
 
                 // Upload to Imgur or Imageshack
-                $imgur = new Imgur(env('IMGUR_KEY'));
+            /*    $imgur = new Imgur( env('IMGUR_KEY') );
                 $response = json_decode($imgur->upload($imageLink));
                 if($response && isset($response->status) && $response->status == 200) {
                     $uploadedImage = $response->data->link;
@@ -224,28 +237,94 @@ class ApiController extends BaseController
                     if ($response && isset($response->status) && $response->status == 1) {
                         $uploadedImage = $response->links->image_link;
                     }
+                }*/
+                
+                set_time_limit(10800); //3 hours max execution time
+                $client_id=env('IMGUR_KEY');
+                $image = $imageLink;
+                    
+              //  do {
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                    curl_setopt($ch, CURLOPT_POST, TRUE);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Authorization: Client-ID ' . $client_id ));
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, array( 'image' => $image ));
+                    $reply = curl_exec($ch);
+                    curl_close($ch);
+                    $reply = json_decode($reply);
+                    $status = $reply->status;
+                // } while( $status != 200 ); //repeat  until we get no errors
+                if($status == 200 )
+                {
+                
+                    
+                    $newimgurl = $reply->data->link;
+                    $deleteHashData = $reply->data->deletehash;
+                    
+                    $uploadedImage  = $newimgurl;
+                    $deleteHash = $deleteHashData;
+                    $imageDimensions = $imageWidth . "x" .$imageHeight;
+                    $thumbDimensions = $thumbWidth. "x" .$thumbHeight;
+                
                 }
-            }
+                else
+                    $uploadedImage = "/image/image-404.png";
+                /*
+                //If you wish to download the image instead,
+                
+                file_put_contents( "L:\\data\\".$originalImageName, fopen($imageLink, 'r'));
+                $filename = "L:\\data\\".$originalImageName;
 
+                $client_id=env('IMGUR_KEY');
+                $handle = fopen($filename, "r");
+                $data = fread($handle, filesize($filename));
+                $pvars   = array('image' => base64_encode($data));
+                
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+                curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+                curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
+                curl_setopt($curl, CURLOPT_POST, 1);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+                $out = curl_exec($curl);
+                
+                curl_close ($curl);
+                $pms = json_decode($out,true);
+                $url=$pms['data']['link'];
+                
+                if($url!=""){
+                    $uploadedImage  = $url;
+                }else{
+                    echo "<h2>There's a Problem</h2>";
+                    echo $pms['data']['error'];  
+                }
+                */
+                
+
+            }
+           
             $postsToInsert[] = [
                 "chan_id" => $postID,
-                "thread_id" => $existingThread->id,
-                "original_image_name" => $originalImageName,
+                "threads_id" => $existingThread->id,
+                //no need for chan_image_name, which was the imgur's file name .ext
                 "image_size" => $imageSize,
-                "image_width" => $imageWidth,
-                "image_height" => $imageHeight,
-                "thumb_width" => $thumbWidth,
-                "thumb_height" => $thumbHeight,
+                "image_dimensions" => $imageDimensions,
+                "thumb_dimensions" => $thumbDimensions,
                 "image_url" => $uploadedImage,
                 "imgur_hash" => $deleteHash,
+                "original_image_name" => $originalImageName,
                 "subject" => $subject,
                 "name" => $name,
                 "tripcode" => $tripcode,
                 "capcode" => $capcode,
-                "post_timestamp" => DB::raw('FROM_UNIXTIME(' . $postTimestamp . ')'), // $postTimestamp is verified to be a numeric value above.
+                "chan_post_date" => DB::raw('FROM_UNIXTIME(' . $postTimestamp . ')'), // $postTimestamp is verified to be a numeric value above.
                 "body" => $postBody,
-                "updated_at" => DB::raw('NOW()'), // Because we're using mass-insertion, we have to set these ourselves :(
-                "created_at" => DB::raw('NOW()')
+                "md5" => $md5
             ];
         }
 

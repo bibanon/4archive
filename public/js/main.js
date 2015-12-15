@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    getSocialLinks();
+   // getSocialLinks();
     statistics();
 
-    if($("body").has("#home-list").length > 0 && $("#home-list").data('board')) {
+   if($("body").has("#home-list").length > 0 && $("#home-list").data('board')) {
         getList('latest', 1, $("#home-list").data('board'));
         getList('popular', 1, $("#home-list").data('board'));
     } else {
@@ -13,13 +13,13 @@ $(document).ready(function() {
 });
 
 $(window).resize(function() {
-    getSocialLinks();
+    //getSocialLinks();
 });
 
 function statistics()
 {
     if($("body").has("#the-statistics").length > 0) {
-        $.get("/api/stats", function(data) {
+        $.get("/archive/api/stats", function(data) {
             $("#the-statistics").html('');
             stats = data.stats;
             
@@ -40,7 +40,7 @@ function getList(type, page, board)
 {
     if($("body").has("#" + type + "-threads").length > 0) {
         page = page > 0 ? page : 1;
-        uri = "/api/threads/" + type + "/" + page + "/" + board;
+        uri = "archive/api/threads/" + type + "/" + page + "/" + board;
 
 
         $.get(uri, function(data) {
@@ -128,7 +128,7 @@ function processForm()
     var time3 = setTimeout(function() { msg("archiveForm", "neutral", 'Archiving thread... We\'re still working on this thread. Hang in there.') }, 18000);
     var time4 = setTimeout(function() { msg("archiveForm", "neutral", 'Archiving thread... Don\'t go! We\'re still archiving this. Images can take a while.') }, 30000);
     
-    $.post("/api/archive", {board:board, id:threadId}, function(data) {
+    $.post("/archive/api/archive", {board:board, id:threadId}, function(data) {
         if(!data.success) {
             clearTimeout(time1);
             clearTimeout(time2);
@@ -141,7 +141,7 @@ function processForm()
             clearTimeout(time2);
             clearTimeout(time3);
             clearTimeout(time4);
-            msg("archiveForm", "success", 'Your thread has been archived. You can see it <a href="/' + board + '/thread/' + threadId + '">here</a>');
+            msg("archiveForm", "success", 'Your thread has been archived. You can see it <a href="http://4chanarchives.cu.cc/board/' + board + '">here</a>');
             $("#threadUrl").val('');
             formElementsPower(1);
         }

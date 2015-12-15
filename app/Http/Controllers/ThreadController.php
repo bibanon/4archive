@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Request;
 use \App\Thread;
+use \App\Post;
 use \App\ViewCache;
 use Cache;
 
@@ -12,12 +13,12 @@ class ThreadController extends BaseController
     public function view($board, $thread_id)
     {
         // Does the thread exist?
-        $thread = Thread::withTrashed()->where("board", "=", $board)->where("thread_id", "=", $thread_id)->firstOrFail();
+        $thread = Thread::where("board", "=", $board)->where("thread_id", "=", $thread_id)->first();
         
-        // Has this thread been takendown? But does this user know the secret key?
+       // Has this thread been takendown? But does this user know the secret key?
         if ($thread->deleted_at != null && Request::input('sv') != $thread->secret) {
-            return view('thread.takendown', ['reason' => ($thread->takedown_reason ? $thread->takedown_reason : "No reason given.")]);
-        }
+           return view('thread.takendown', ['reason' => ($thread->takedown_reason ? $thread->takedown_reason : "No reason given.")]);
+       }
 
         // Fetch cache first.
         if (Cache::has('thread_' . $board . '_' . $thread_id)) {
@@ -25,7 +26,7 @@ class ThreadController extends BaseController
         }
 
         // No cache? Okay, let's fetch all the posts.
-        $posts = $thread->posts()->get();
+        $posts = $thread->posts()->get(); 
 
         // Has this user already viewed this thread in the past 12 hours?
         $viewCache = ViewCache::where('user_ip', '=', Request::ip())->first();
